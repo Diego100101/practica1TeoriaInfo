@@ -17,7 +17,7 @@ txt = input("Ingrese el libro en formato .txt, o su ruta asboluta\n")
 
 # Se abre el archivo con extensión ".txt" y se asigna a una variable llamada 'libro' para ser leído
 # Después, con la variable 'contenido', leemos los caracteres de 'libro' y cambiamos a mínusculas y quitamos acentos.
-with open('La metamorfosis.txt', encoding="utf-8") as libro:
+with open(txt, encoding="utf-8") as libro:
     contenido = libro.read()
     contenido = funciones.normalizar(contenido)
 
