@@ -22,7 +22,7 @@ with open(txt, encoding="utf-8") as libro:
     contenido = funciones.normalizar(contenido)
 
 # Se solicita ingresar la letra por buscar y se normaliza.
-letra = input('Ingresa letra por buscar o combinación: ')
+letra = input('Ingresa letra por buscar o combinación: \n')
 letra = funciones.normalizar(letra)
 
 # Se crea una lista que contiene un alfabeto con los caracteres de interés para el texto.
