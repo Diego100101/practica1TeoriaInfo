@@ -34,7 +34,7 @@ for a in alfabeto:
 
 # Se imprimen la cuenta de los caracteres totales en el archivo
 print(f"Caracteres totales en el texto: {caracteres}\n")
-
+entropia = 0
 # Se utiliza un ciclo 'for' para calcular las probabilidades y entropías de cada letra del alfabeto
 for a in alfabeto:
     # Se obtiene la cuenta total de la letra en el archivo
@@ -44,15 +44,22 @@ for a in alfabeto:
     if letraContar == 0:
         print(f"No existe <{a}> en el texto.\n")
     else:
-        # Se calcula e imprime la probabilidad y entropía
+        # Se calcula e imprime la probabilidad e información
         probabilidadLetra = funciones.probabilidad(letraContar, caracteres)
         entropiaLetra = funciones.entropia(probabilidadLetra)
-        entropiaDos = funciones.entropiaOrdenDos(entropiaLetra)
-        entropiaTres = funciones.entropiaOrdenTres(entropiaLetra)
+        entropia = entropia + entropiaLetra
+        informacion = funciones.informacion(probabilidadLetra)
         print(f"Número de <{a}> dentro del texto: {letraContar}")
-        print(f"Probabilidad de la letra o combinación en el texto: P(x) = {probabilidadLetra:.5f} "
+        print(f"Probabilidad de la letra en el texto: P(x) = {probabilidadLetra:.5f} "
               f"= {probabilidadLetra * 100:.4f}%")
-        print(f"Entropía: H(x) = {entropiaLetra:.4f}")
-        print(f"Entropía de orden dos: H(x2) = {entropiaDos:.4f}")
-        print(f"Entropía de orden tres: H(x3) = {entropiaTres:.4f}\n")
+        print(f"Información: I(x) = {informacion}")
+        print(f"Entropía de la letra: H(x) = {entropiaLetra:.4f}\n")
 
+# Calcula la entropía de orden dos y tres
+entropiaDos = funciones.entropiaOrdenDos(entropiaLetra)
+entropiaTres = funciones.entropiaOrdenTres(entropiaLetra)
+
+# Imprime la entroía total y las entropía de orden dos y tres
+print(f"Entropía: H(x) = {entropia:.4f}")
+print(f"Entropía de orden dos: H(x²) = {entropiaDos:.4f}")
+print(f"Entropía de orden tres: H(x³) = {entropiaTres:.4f}")
