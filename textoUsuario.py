@@ -5,18 +5,25 @@
 # 1 de marzo de 2023
 #------------------------------------------------------------------------------
 
-# Este es un código alternativo al código 'textoUsuario.py', a diferencia, únicamente permite ingresar
-# la ruta del archivo de texto, pero imprime las probabilidades, entropías y veces que aparece en el
-# archivo de todas las letras del alfabeto establecido.
+# Este código recibe un archivo de texto (extensión .txt) y un caracter, o combinación de caracteres,
+# de interés para que pueda regresar los cálculos de la probabilidad y entropía, así como el número
+# de veces que aparece en el texto y los caracteres totales del archivo. Está pensado para que el
+# usuario pueda ingresar manualmente el caracter y la ruta del archivo de texto.
+
 import funciones
 
-txt = input("Ingrese el libro en formato .txt, o su ruta absoluta\n")
+# Se pide ingresar el archivo con extensión .txt que se desea analizar
+txt = input("Ingrese el libro en formato .txt, o su ruta asboluta\n")
 
 # Se abre el archivo con extensión ".txt" y se asigna a una variable llamada 'libro' para ser leído
 # Después, con la variable 'contenido', leemos los caracteres de 'libro' y cambiamos a mínusculas y quitamos acentos.
 with open(txt, encoding="utf-8") as libro:
     contenido = libro.read()
     contenido = funciones.normalizar(contenido)
+
+# Se solicita ingresar la letra por buscar y se normaliza.
+letra = input('Ingresa letra por buscar o combinación: \n')
+letra = funciones.normalizar(letra)
 
 # Se crea una lista que contiene un alfabeto con los caracteres de interés para el texto.
 alfabeto = [' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's',
@@ -32,34 +39,26 @@ for a in alfabeto:
         if i == a:
             caracteres += 1
 
-# Se imprimen la cuenta de los caracteres totales en el archivo
-print(f"Caracteres totales en el texto: {caracteres}\n")
+# Cuenta el número de veces que aparece la letra ingresada dentro del texto
+cuenta = contenido.count(letra)
+
+# Se asegura que la cuenta no sea cero
+# Calcula probabilidad y entropía e imprime los resultados
 entropia = 0
-# Se utiliza un ciclo 'for' para calcular las probabilidades y entropías de cada letra del alfabeto
-for a in alfabeto:
-    # Se obtiene la cuenta total de la letra en el archivo
-    letraContar = contenido.count(a)
-
-    # Se verifica que el valor anterior no sea cero, pues podría ocasionar una división por cero en la entropía
-    if letraContar == 0:
-        print(f"No existe <{a}> en el texto.\n")
-    else:
-        # Se calcula e imprime la probabilidad e información
-        probabilidadLetra = funciones.probabilidad(letraContar, caracteres)
-        entropiaLetra = funciones.entropia(probabilidadLetra)
-        entropia = entropia + entropiaLetra
-        informacion = funciones.informacion(probabilidadLetra)
-        print(f"Número de <{a}> dentro del texto: {letraContar}")
-        print(f"Probabilidad de la letra en el texto: P(x) = {probabilidadLetra:.5f} "
-              f"= {probabilidadLetra * 100:.4f}%")
-        print(f"Información: I(x) = {informacion}")
-        print(f"Entropía de la letra: H(x) = {entropiaLetra:.4f}\n")
-
-# Calcula la entropía de orden dos y tres
-entropiaDos = funciones.entropiaOrdenDos(entropiaLetra)
-entropiaTres = funciones.entropiaOrdenTres(entropiaLetra)
-
-# Imprime la entroía total y las entropía de orden dos y tres
-print(f"Entropía: H(x) = {entropia:.4f}")
-print(f"Entropía de orden dos: H(x²) = {entropiaDos:.4f}")
-print(f"Entropía de orden tres: H(x³) = {entropiaTres:.4f}")
+if cuenta == 0:
+    print("No existe esta combinación en el texto):")
+else:
+    probabilidadLetra = funciones.probabilidad(cuenta, caracteres)
+    entropiaLetra = funciones.entropia(probabilidadLetra)
+    entropia = entropia + entropiaLetra
+    entropiaDos = funciones.entropiaOrdenDos(entropiaLetra)
+    entropiaTres = funciones.entropiaOrdenTres(entropiaLetra)
+    informacion = funciones.informacion(probabilidadLetra)
+    print(f"Número de <{letra}> dentro del texto: {cuenta}")
+    print(f"Caracteres: {caracteres}")
+    print(f"Probabilidad de la letra o combinación en el texto: P(x) = {probabilidadLetra:.5f} "
+          f"= {probabilidadLetra * 100:.4f}%")
+    print(f"Información: I(x) = {informacion:.4f}")
+    print(f"Entropía: H(x) = {entropiaLetra:.4f}")
+    print(f"Entropía de orden dos: H(x2) = {entropiaDos:.4f}")
+    print(f"Entropía de orden tres: H(x3) = {entropiaTres:.4f}")
