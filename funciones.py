@@ -25,6 +25,16 @@ def probabilidad( cuentaLetra, total):
     prob = cuentaLetra/total
     return prob
 
+# Información
+# Se calcula la probabilidad con
+def informacion(probabilidad):
+    if probabilidad == 0:
+        print("División con cero")
+    else:
+        x = 1 / probabilidad
+        I_x = probabilidad * math.log(x, 2)
+    return I_x
+
 # Entropía
 # Se calcula la entropía con: H(x) = P(x)log_2(1/P(x))
 def entropia(probabilidad):
@@ -34,6 +44,7 @@ def entropia(probabilidad):
         x = 1 / probabilidad
         H_x = probabilidad * math.log( x, 2)
     return H_x
+
 # Entropía segundo orden
 # Se calcula la entropía de segundo orden con: H(x²) = 2H(x)
 def entropiaOrdenDos(entropia):
